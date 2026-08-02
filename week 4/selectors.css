@@ -1,0 +1,57 @@
+/* 1. Element Selector */
+    p {
+        color : green;
+    }
+    /* 2. Class Selector */
+    .highlight {
+        background: yellow;
+        padding: 5px;
+    }
+    /* 3. ID Selector */
+    #header {
+        background: blue;
+        color: white;
+        padding: 10px;
+    }
+p:hover {
+    color: red;
+    background-color: pink;
+    cursor: pointer;
+}
+input [type="text"]{
+    border: 2px solid blue;
+    padding: 8px;
+    border-radius: 5px;
+}
+input[type="text"]:focus{
+    border-color: rgb(255, 0, 128);
+    outline: none;
+    background-color: #fff0fa;
+}
+body {
+    font-family: serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+}
+/* Parent ควบคุมฟอนต์ทั้งหมด */
+parent{
+    font-size: 16px;
+    border: 2px solid #ccc;
+    padding: 20px;
+    margin-top: 20px;
+}
+/* child ใช้ em -> เปลี่ยนตาม parent*/
+.child-title{
+    font-size: 2em;
+    color: #c0392b;
+    font-weight: bold;
+}
+.child-text{
+    font-size: 1.2em;
+    color: #2980b9;
+}
+.fixed-text{
+    font-size: 18px;
+    color: #2980b9;
+}

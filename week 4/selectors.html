@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>selectors</title>
+</head>
+<!-- นี่คือการเชื่อม css มายัง html ควรใส่ไว้ใน header  -->
+    <link rel="stylesheet" href="selectors.css"> 
+ <!-- <style>
+    /* 1. Element Selector */
+    p {
+        color : green;
+    }
+    /* 2. Class Selector */
+    .highlight {
+        background: yellow;
+        padding: 5px;
+    }
+    /* 3. ID Selector */
+    #header {
+        background: blue;
+        color: white;
+        padding: 10px;
+    }
+p:hover {
+    color: red;
+    background-color: pink;
+    cursor: pointer;
+}
+input [type="text"]{
+    border: 2px solid blue;
+    padding: 8px;
+    border-radius: 5px;
+}
+input[type="text"]:focus{
+    border-color: rgb(255, 0, 128);
+    outline: none;
+    background-color: #fff0fa;
+}
+body {
+    font-family: serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+}
+/* Parent ควบคุมฟอนต์ทั้งหมด */
+parent{
+    font-size: 16px;
+    border: 2px solid #ccc;
+    padding: 20px;
+    margin-top: 20px;
+}
+/* child ใช้ em -> เปลี่ยนตาม parent*/
+.child-title{
+    font-size: 2em;
+    color: #c0392b;
+    font-weight: bold;
+}
+.child-text{
+    font-size: 1.2em;
+    color: #2980b9;
+}
+.fixed-text{
+    font-size: 18px;
+    color: #2980b9;
+}
+</style>  -->
+<body>
+    
+    <h1>ตัวอย่าง CSS selectors</h1>
+    <!-- Element Selector -->
+    <p>
+        ข้อความนี้ถูกจัดสีด้วย Element Selector (p { color: green;})
+    </p>    
+    <!-- Class Selector -->
+    <p class="highlight">
+        ข้อความนี้ถูกจัดสไตล์ด้วย Class Selector (.highlight)
+    </p>
+
+     <!-- ID Selector -->
+    <div id="header">
+        นี่คือพื้นที่ Header (ID Selector)
+    </div>
+    <h2>Pseudo-class :hover</h2>
+    <p>นำเมาส์มาวางบนข้อความนี้เพื่อดูเอฟเฟกต์</p>
+    <h2>Attribute Selector [type="text"]</h2>
+    <input type="text" placeholder="พิมพ์ข้อความที่นี่">
+</body>
+</html>

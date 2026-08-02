@@ -1,0 +1,41 @@
+body {
+        color : blue;
+    }
+h1 {
+    color: red;
+    font-size: 40px;
+    text-shadow: 5px 5px 5px rgb(187, 255, 0);
+}
+.highlight {
+        background: greenyellow;
+        padding: 5px;
+    }
+#header {
+        background: green;
+        color: white;
+        padding: 10px;
+        text-align: center;
+    }
+.text-align{
+        text-align: center;
+    }
+.text-decoration{
+        text-decoration: underline;
+    }
+.line-height{
+        line-height: 25px;
+    }
+.sans {
+        font-family: Arial, sans-serif;
+        font-style: italic;
+        font-weight: 400;
+        font-size: 25px;
+        color: red;
+    }
+.serif-red {
+        font-family: Georgia, serif;
+        font-style: oblique;
+        font-weight: 600;
+        font-size: 25px;
+        color: royalblue;
+    }
