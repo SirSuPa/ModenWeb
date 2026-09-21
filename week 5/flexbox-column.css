@@ -1,0 +1,21 @@
+.flex-box {
+    display: flex;
+    flex-direction: column; /* <- เปลี่ยนเป็นแนวตั้ง */
+    gap: 10px;
+    background: #f0f0f0;
+    padding: 15px;
+    border: 2px solid #ccc;
+    height: 200px; /* เพิ่มความสูงเพื่อเห็นการจัดวาง */
+}
+
+.item {
+    background: navy;
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+.stretch .item {
+    background: teal;
+    height: auto;
+}

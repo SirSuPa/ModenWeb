@@ -1,0 +1,24 @@
+.container {
+    display: grid;
+    grid-template-columns: 350px;
+}
+div {
+       font-size: 12px;
+}
+button {
+    background-color: green;
+    color: white;   
+}
+.p{
+    padding-left: 800px;
+    padding-top: 100px;
+   
+}
+.btn:hover {
+            background: white;
+            color: green;
+        }
+
+.line-height{
+        line-height: 30px;
+    }
