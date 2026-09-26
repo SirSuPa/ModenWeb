@@ -1,0 +1,24 @@
+function runBubbleSort(){
+    let number = [30, 27, 84, 36, 24, 2, 74,37, 8, 50];
+    let n = number.length;
+
+    console.clear();
+    console.log("Bubble Sort Running...");
+    console.log("Original:",number.join(" "));
+
+    for (let i = 0; i < n - 1; i++){
+        for (let j = 0; j < n - i -1; j++){
+            console.log(`เปรียบเทียบ ${number[j]} กับ ${number[j + 1]}`);
+            if(number[j] > number[j + 1]){
+                console.log(`สลับ: ${number[j]} <-> ${number[j + 1]}`);
+
+                let temp = number[j];
+                number[j] = number[j + 1];
+                number[j + 1] = temp;
+            }
+        }
+    }
+    document.getElementById("output").innerHTML = 
+    "<strong>Output:</strong><br><br>Sorted: " + number.join(" ");
+    console.log("ผลลัพธ์สุดท้าย:", number.join(" "));
+}
