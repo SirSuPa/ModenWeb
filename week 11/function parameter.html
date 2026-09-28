@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>function with parameter</title>
+</head>
+<body>
+    <pre id="outputbox"></pre>
+    <script>
+         function runDemo(){
+    const output = [];
+
+    // 1 ฟังก์ชันแบบปกติ
+    function sayHi(){
+        output.push("Hi");
+        console.log("Hi");
+    }
+    sayHi();
+    // 2 ฟังก์ชั้นแบบ arrow
+    const sayHiArrow = () => {
+        output.push("Hi form Arrow");
+        console.log("Hi form Arrow");
+    };
+    sayHiArrow();
+    // 3 ฟังก์ชันแบบส่งค่าเข้า
+    function greet(name){
+        output.push("Hello " + name)
+        console.log("Hello " + name);
+    }
+    greet("Alex");
+    // 4 ฟังก์ชันแบบ return
+    function add(a,b){
+        return a + b;
+    }
+    let sum = add(5,7);
+    output.push("ผลรวม 5 + 7 = " + sum);
+    console.log("ผลรวม:",sum);
+    
+    document.getElementById("outputbox").textContent = output.join("\n");
+}
+    runDemo();
+    </script>
+</body>
+</html>

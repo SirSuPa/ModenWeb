@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <title>Modern DOM APIs – Demo รวม</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    h1, h2 {
+      margin-top: 0;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #555;
+    }
+    section {
+      background: #fff;
+      padding: 16px 20px;
+      margin: 0 auto 20px;
+      max-width: 960px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    }
+    section + section { margin-top: 20px; }
+
+    .demo-box {
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 12px;
+      background: #fafafa;
+      margin-top: 10px;
+    }
+    .label {
+      font-weight: 600;
+      margin-bottom: 4px;
+      display: block;
+    }
+    button {
+      padding: 6px 14px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      background: #eee;
+    }
+    button:hover {
+      background: #e0e0e0;
+    }
+    input[type="text"] {
+      padding: 6px 8px;
+      font-size: 0.95rem;
+      width: 100%;
+      max-width: 360px;
+    }
+    code {
+      background: #eee;
+      padding: 2px 4px;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+
+    /* IntersectionObserver demo */
+    .io-target {
+      margin-top: 40vh;
+      margin-bottom: 40vh;
+      padding: 40px;
+      text-align: center;
+      background: #c5e1a5;
+      border-radius: 8px;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: 0.6s;
+    }
+    .io-target.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ResizeObserver demo */
+    #resizeBox {
+      background: #bbdefb;
+      padding: 10px;
+      resize: both;
+      overflow: auto;
+      min-width: 120px;
+      min-height: 60px;
+      max-width: 100%;
+    }
+
+    /* MutationObserver demo */
+    #mutTarget {
+      padding: 10px;
+      background: #fff9c4;
+      border-radius: 4px;
+    }
+    #mutLog {
+      max-height: 120px;
+      overflow-y: auto;
+      font-size: 0.85rem;
+      background: #f0f0f0;
+      padding: 6px;
+      border-radius: 4px;
+    }
+
+    /* Fullscreen demo */
+    #fsBox {
+      background: #d1c4e9;
+      padding: 20px;
+      text-align: center;
+      border-radius: 8px;
+    }
+
+    /* Fetch + Abort demo */
+    #fetchLog {
+      font-size: 0.9rem;
+      white-space: pre-wrap;
+      background: #f0f0f0;
+      padding: 6px;
+      border-radius: 4px;
+      max-height: 140px;
+      overflow: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>Modern DOM APIs – Demo</h1>
+  <p class="subtitle">ตัวอย่าง API ใหม่ ๆ ของ DOM ใช้สอนได้ในหน้าเดียว</p>
+
+  <!-- 1. IntersectionObserver -->
+  <section id="sec-intersection">
+    <h2>1. IntersectionObserver – เช็คว่า element เข้าหน้าจอหรือยัง</h2>
+    <p>เลื่อนลงมาจนกล่องด้านล่างเข้าหน้าจอ กล่องจะค่อย ๆ โผล่ขึ้นมา (animate in)</p>
+
+    <div class="demo-box">
+      <div class="io-target" id="ioTarget">
+        👋 ผมถูกแสดงตอนที่เข้า viewport ด้วย IntersectionObserver
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. ResizeObserver -->
+  <section id="sec-resize">
+    <h2>2. ResizeObserver – เช็คเมื่อขนาด element เปลี่ยน</h2>
+    <p>ลองลากมุมกล่อง (resize) แล้วดูค่าขนาดด้านล่าง</p>
+
+    <div class="demo-box">
+      <div id="resizeBox">
+        ลากมุมล่างขวาเพื่อเปลี่ยนขนาดกล่องนี้
+      </div>
+      <p><span class="label">ขนาดปัจจุบัน:</span>
+        <span id="resizeSize">–</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- 3. MutationObserver -->
+  <section id="sec-mutation">
+    <h2>3. MutationObserver – สังเกตการเปลี่ยน DOM</h2>
+    <p>คลิกปุ่มเพื่อเปลี่ยนข้อความ / attribute แล้วดู log ด้านล่าง</p>
+
+    <div class="demo-box">
+      <div id="mutTarget">ข้อความเริ่มต้น</div>
+      <br />
+      <button id="btnMutText">เปลี่ยนข้อความ</button>
+      <button id="btnMutColor">สลับสีพื้นหลัง</button>
+
+      <p class="label" style="margin-top:10px;">Mutation log:</p>
+      <div id="mutLog">(ยังไม่มีการเปลี่ยนแปลง)</div>
+    </div>
+  </section>
+
+  <!-- 4. Clipboard API -->
+  <section id="sec-clipboard">
+    <h2>4. Clipboard API – คัดลอก/วาง ข้อความ</h2>
+    <p>ต้องรันบน <code>http://</code> หรือ <code>https://</code> (บาง browser ไม่ให้ใช้ clipboard บน <code>file://</code>)</p>
+
+    <div class="demo-box">
+      <label class="label" for="clipInput">ข้อความ:</label>
+      <input id="clipInput" type="text" value="Hello from Clipboard API" />
+      <br /><br />
+      <button id="btnCopy">Copy</button>
+      <button id="btnPaste">Paste</button>
+      <span id="clipStatus"></span>
+    </div>
+  </section>
+
+  <!-- 5. Fullscreen API -->
+  <section id="sec-fullscreen">
+    <h2>5. Fullscreen API – สลับ element เข้า/ออก fullscreen</h2>
+    <p>คลิกปุ่มเพื่อขยายกล่องให้เต็มหน้าจอ หรือออกจาก fullscreen</p>
+
+    <div class="demo-box">
+      <div id="fsBox">
+        กล่องนี้จะเป็น fullscreen เมื่อตรงนี้หรือปุ่มด้านล่างถูกคลิก
+      </div>
+      <br />
+      <button id="btnFullscreen">Toggle Fullscreen</button>
+    </div>
+  </section>
+
+  <!-- 6. Page Visibility API -->
+  <section id="sec-visibility">
+    <h2>6. Page Visibility API – รู้ว่า tab ถูกซ่อนหรือเปล่า</h2>
+    <p>สลับไป tab อื่น แล้วกลับมาดูข้อความด้านล่าง</p>
+
+    <div class="demo-box">
+      <p class="label">สถานะแท็บ:</p>
+      <div id="visStatus">ยังไม่เปลี่ยน</div>
+    </div>
+  </section>
+
+  <!-- 7. Battery Status API -->
+  <section id="sec-battery">
+    <h2>7. Battery Status API (หายไปจากหลาย browser แล้ว)</h2>
+    <p>API นี้หลาย browser เอาออกเพราะเรื่อง privacy แต่มีโค้ดตัวอย่างไว้เพื่อความเข้าใจ</p>
+
+    <div class="demo-box">
+      <p id="batteryInfo">กำลังตรวจสอบว่า browser รองรับหรือไม่...</p>
+    </div>
+  </section>
+
+  <!-- 8. requestIdleCallback -->
+  <section id="sec-idle">
+    <h2>8. requestIdleCallback – รันงานเบา ๆ ตอนที่ browser ว่าง</h2>
+    <p>ใช้สำหรับงาน background ที่ไม่รีบ เช่น pre-cache, วิเคราะห์ข้อมูล ฯลฯ</p>
+
+    <div class="demo-box">
+      <button id="btnIdle">กำหนดงานเบา ๆ ให้รันตอน browser ว่าง</button>
+      <p class="label">log:</p>
+      <div id="idleLog">ยังไม่มีงาน</div>
+    </div>
+  </section>
+
+  <!-- 9. Fetch + AbortController -->
+  <section id="sec-fetch">
+    <h2>9. Fetch + AbortController – ยกเลิก request ได้</h2>
+    <p>กด "เริ่ม fetch" แล้วรีบกด "ยกเลิก" ดูผลลัพธ์ใน log</p>
+
+    <div class="demo-box">
+      <button id="btnStartFetch">เริ่ม fetch</button>
+      <button id="btnAbortFetch">ยกเลิก</button>
+      <p class="label">Fetch log:</p>
+      <div id="fetchLog">(รอคำสั่ง)</div>
+    </div>
+  </section>
+
+  <script>
+    /* ---------------- 1. IntersectionObserver ---------------- */
+    (function () {
+      const target = document.getElementById('ioTarget');
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            target.classList.add('visible');
+            io.unobserve(target);
+          }
+        });
+      });
+      io.observe(target);
+    })();
+
+    /* ---------------- 2. ResizeObserver ---------------- */
+    (function () {
+      const box = document.getElementById('resizeBox');
+      const sizeLabel = document.getElementById('resizeSize');
+
+      const update = rect => {
+        sizeLabel.textContent =
+          Math.round(rect.width) + ' x ' + Math.round(rect.height) + ' px';
+      };
+
+      if ('ResizeObserver' in window) {
+        const ro = new ResizeObserver(entries => {
+          for (const entry of entries) {
+            update(entry.contentRect);
+          }
+        });
+        ro.observe(box);
+      } else {
+        sizeLabel.textContent = 'เบราว์เซอร์ไม่รองรับ ResizeObserver';
+      }
+    })();
+
+    /* ---------------- 3. MutationObserver ---------------- */
+    (function () {
+      const target = document.getElementById('mutTarget');
+      const logDiv = document.getElementById('mutLog');
+      const btnText = document.getElementById('btnMutText');
+      const btnColor = document.getElementById('btnMutColor');
+
+      function addLog(text) {
+        const time = new Date().toLocaleTimeString();
+        logDiv.textContent =
+          (logDiv.textContent === '(ยังไม่มีการเปลี่ยนแปลง)' ? '' : logDiv.textContent + '\n') +
+          '[' + time + '] ' + text;
+      }
+
+      const mo = new MutationObserver(mutations => {
+        mutations.forEach(m => {
+          addLog('type=' + m.type + ', attr=' + (m.attributeName || '-'));
+        });
+      });
+
+      mo.observe(target, {
+        childList: true,
+        characterData: true,
+        attributes: true,
+        subtree: true
+      });
+
+      let toggled = false;
+      btnText.addEventListener('click', () => {
+        target.textContent = toggled ? 'ข้อความเริ่มต้น' : 'ข้อความถูกเปลี่ยนแล้ว!';
+        toggled = !toggled;
+      });
+
+      let colorToggled = false;
+      btnColor.addEventListener('click', () => {
+        target.style.backgroundColor = colorToggled ? '#fff9c4' : '#ffecb3';
+        colorToggled = !colorToggled;
+      });
+    })();
+
+    /* ---------------- 4. Clipboard API ---------------- */
+    (function () {
+      const input = document.getElementById('clipInput');
+      const btnCopy = document.getElementById('btnCopy');
+      const btnPaste = document.getElementById('btnPaste');
+      const status = document.getElementById('clipStatus');
+
+      function setStatus(msg) {
+        status.textContent = ' ' + msg;
+      }
+
+      btnCopy.addEventListener('click', async () => {
+        if (!navigator.clipboard) {
+          setStatus('browser ไม่อนุญาต clipboard API');
+          return;
+        }
+        try {
+          await navigator.clipboard.writeText(input.value);
+          setStatus('คัดลอกแล้ว');
+        } catch (err) {
+          setStatus('คัดลอกไม่สำเร็จ: ' + err);
+        }
+      });
+
+      btnPaste.addEventListener('click', async () => {
+        if (!navigator.clipboard) {
+          setStatus('browser ไม่อนุญาต clipboard API');
+          return;
+        }
+        try {
+          const text = await navigator.clipboard.readText();
+          input.value = text;
+          setStatus('วางข้อความจาก clipboard แล้ว');
+        } catch (err) {
+          setStatus('วางไม่สำเร็จ: ' + err);
+        }
+      });
+    })();
+
+    /* ---------------- 5. Fullscreen API ---------------- */
+    (function () {
+      const box = document.getElementById('fsBox');
+      const btn = document.getElementById('btnFullscreen');
+
+      function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+          box.requestFullscreen && box.requestFullscreen();
+        } else {
+          document.exitFullscreen && document.exitFullscreen();
+        }
+      }
+
+      btn.addEventListener('click', toggleFullscreen);
+      box.addEventListener('click', toggleFullscreen);
+    })();
+
+    /* ---------------- 6. Page Visibility API ---------------- */
+    (function () {
+      const visStatus = document.getElementById('visStatus');
+
+      function update() {
+        visStatus.textContent = document.hidden
+          ? 'แท็บถูกซ่อน (hidden = true) – ควรหยุดงานหนัก เช่น animation, video'
+          : 'แท็บกำลังถูกมอง – ทำงานต่อได้';
+      }
+
+      document.addEventListener('visibilitychange', update);
+      update();
+    })();
+
+    /* ---------------- 7. Battery Status API ---------------- */
+    (function () {
+      const info = document.getElementById('batteryInfo');
+
+      if ('getBattery' in navigator) {
+        navigator.getBattery().then(battery => {
+          const level = Math.round(battery.level * 100) + '%';
+          info.textContent = 'ระดับแบต: ' + level +
+            ' | ชาร์จอยู่ไหม: ' + (battery.charging ? 'ใช่' : 'ไม่');
+        });
+      } else {
+        info.textContent =
+          'เบราว์เซอร์นี้ไม่รองรับ Battery API (หลายเจ้าเอาออกแล้วเพราะเหตุผลด้าน privacy)';
+      }
+    })();
+
+    /* ---------------- 8. requestIdleCallback ---------------- */
+    (function () {
+      const btn = document.getElementById('btnIdle');
+      const log = document.getElementById('idleLog');
+
+      function addLog(text) {
+        const time = new Date().toLocaleTimeString();
+        log.textContent =
+          (log.textContent === 'ยังไม่มีงาน' ? '' : log.textContent + '\n') +
+          '[' + time + '] ' + text;
+      }
+
+      btn.addEventListener('click', () => {
+        const idleCb = window.requestIdleCallback || function (fn) {
+          // fallback
+          setTimeout(fn, 0);
+        };
+
+        addLog('สั่งงานเบา ๆ ไว้แล้ว รอ browser ว่าง...');
+        idleCb(deadline => {
+          addLog('browser ว่างแล้ว → ทำงาน background เสร็จ');
+        });
+      });
+    })();
+
+    /* ---------------- 9. Fetch + AbortController ---------------- */
+    (function () {
+      const btnStart = document.getElementById('btnStartFetch');
+      const btnAbort = document.getElementById('btnAbortFetch');
+      const log = document.getElementById('fetchLog');
+
+      let controller = null;
+
+      function addLog(text) {
+        const time = new Date().toLocaleTimeString();
+        log.textContent =
+          (log.textContent === '(รอคำสั่ง)' ? '' : log.textContent + '\n') +
+          '[' + time + '] ' + text;
+      }
+
+      btnStart.addEventListener('click', () => {
+        if (!('AbortController' in window)) {
+          addLog('browser ไม่รองรับ AbortController');
+          return;
+        }
+        controller = new AbortController();
+        addLog('เริ่ม fetch ...');
+
+        fetch('https://jsonplaceholder.typicode.com/todos/1', {
+          signal: controller.signal
+        })
+          .then(res => res.json())
+          .then(data => {
+            addLog('สำเร็จ: ' + JSON.stringify(data));
+          })
+          .catch(err => {
+            addLog('ล้มเหลว: ' + err);
+          });
+      });
+
+      btnAbort.addEventListener('click', () => {
+        if (controller) {
+          controller.abort();
+          addLog('สั่งยกเลิก fetch แล้ว');
+        } else {
+          addLog('ยังไม่มี fetch ให้ยกเลิก');
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

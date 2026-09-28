@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM and JavaScript</title>
+</head>
+<body>
+    <h1 id="header">หัวข้อเดิมบนหน้าเว็บ</h1>
+    <p>รายการตัวอย่าง (class = "item"):</p>
+    <ul>
+        <li class="item">รายการที่ 1</li>
+        <li class="item">รายการที่ 2</li>
+        <li class="item">รายการที่ 3</li>
+    </ul>
+    
+    <div style="margin-top: 20px; margin-bottom: 10px;">
+        <button onclick="changeTitle()">เปลี่ยนข้อความ + สีของหัวข้อ</button>
+        <button onclick="highlightItem()">ไฮไลต์ .item ทั้งหมด</button>
+        <button onclick="addParagraph()">สร้าง & เพิ่มข้อความใหม่</button>
+    </div>
+    
+    <div id="logBox">Log: รอกดปุ่มเพื่อดูการเปลี่ยนแปลง...</div>
+    <script src="DOM.js"></script>
+</body>
+</html>
